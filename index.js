@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 const multer = require("multer"); // Add this line
 app.use(express.json({ limit: '50mb' })); // Increase the limit for express.json()
-const cors = require("cors");
-app.use(cors());
+
+app.use(cors({
+  origin: "https://governament-docs.netlify.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // enable set cookie
+}));
+
 const bcrypt = require("bcryptjs");
 app.use(express.urlencoded({ extended: false }));
 
