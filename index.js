@@ -60,6 +60,10 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login-user", async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
