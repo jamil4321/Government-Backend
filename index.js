@@ -1,20 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors = require("cors");
 const multer = require("multer"); // Add this line
 app.use(express.json({ limit: '50mb' })); // Increase the limit for express.json()
-
-
+const cors = require("cors");
+app.use(cors());
 const bcrypt = require("bcryptjs");
-
-
-app.use(cors({
-  origin: '*',
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // enable set cookie
-}));
-
 app.use(express.urlencoded({ extended: false }));
 
 const mongoUrl ="mongodb+srv://newtest:newtest@cluster0.verwgdi.mongodb.net/"
@@ -91,7 +82,7 @@ app.post("/login-user", async (req, res) => {
 app.post("/upload-image", async (req, res) => {
   const { base64 } = req.body;
   try {
-    await Images.create({ image: base64 ,  name:req.body.name , select:req.body.select ,password:req.body.password, fileid:req.body.fileid , date:req.body.date , code:req.body.qrCodeImage , Qrcode:req.body.uniqueId , location:req.body.location});
+    await Images.create({ image: base64 ,  name:req.body.name , select:req.body.select ,password:req.body.password, fileid:req.body.fileid , date:req.body.date , code:req.body.qrCodeImage  , location:req.body.location , QrGet:req.body.QrGet, Qrcode:req.body.uniqueId});
     res.send({ Status: "ok" })
 
   } catch (error) {
@@ -112,9 +103,9 @@ app.get("/get-image", async (req, res) => {
 })
 
 
-const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log("Server Started"+port);
+
+app.listen(5000, () => {
+  console.log("Server Started");
 });
 
