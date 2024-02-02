@@ -8,8 +8,9 @@ const ImageDetailsScehma = new mongoose.Schema(
    fileid:String,
    date:String,
    code:String,
-   Qrcode:String,
    location:String,
+   QrGet:String,
+   Qrcode:String
   },
   {
     collection: "ImageDetails",
