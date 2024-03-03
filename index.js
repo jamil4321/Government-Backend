@@ -66,7 +66,7 @@ app.post("/login-user", async (req, res) => {
       const passCompare = await bcrypt.compare(password, user.password);
 
       if (passCompare) {
-        return res.json({ password: "User Logined Successfully", user });
+        return res.json({ message: "User Logined Successfully", user });
         // console.log("password Found");node index.js
       } else {
         console.log("password not found");
