@@ -143,6 +143,10 @@ app.get("/get-image-count", async (req, res) => {
 })
 
 
+app.get("/", async (req, res) => {
+  res.send("Hello Wolrd")
+})
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log("Server Started");
