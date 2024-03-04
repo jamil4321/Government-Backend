@@ -85,7 +85,7 @@ app.post("/login-user", async (req, res) => {
 app.post("/upload-image", async (req, res) => {
   const { base64 } = req.body;
   try {
-    await Images.create({ image: base64, name: req.body.name, select: req.body.select, password: req.body.password, fileid: req.body.fileid, date: req.body.date, code: req.body.qrCodeImage, location: req.body.location, QrGet: req.body.QrGet, Qrcode: req.body.uniqueId });
+    await Images.create({ userId:req.body.userId,image: base64, name: req.body.name, select: req.body.select, password: req.body.password, fileid: req.body.fileid, date: req.body.date, code: req.body.qrCodeImage, location: req.body.location, QrGet: req.body.QrGet, Qrcode: req.body.uniqueId });
     res.send({ Status: "ok" })
 
   } catch (error) {
@@ -104,11 +104,21 @@ app.get("/get-image", async (req, res) => {
     return res.status(400)
   }
 })
-
-app.get("/get-image/:id", async (req, res) => {
-  console.log(req.params,"params")
+app.get("/get-image-by-User/:id", async (req, res) => {
+  console.log("images by User",req.params.id)
   try {
-    await Images.find({fileid:req.params.id}).then(data => {
+    await Images.find({userId:req.params.id}).then(data => {
+      res.send({ status: "ok", data: data })
+    })
+
+  } catch (error) {
+    return res.status(400)
+  }
+})
+app.get("/get-image/:id", async (req, res) => {
+  console.log(req.params, "params")
+  try {
+    await Images.find({ fileid: req.params.id }).then(data => {
       res.send({ status: "ok", data: data })
     })
 
@@ -118,12 +128,12 @@ app.get("/get-image/:id", async (req, res) => {
 })
 
 app.get("/get-image/find_by_qr/:id", async (req, res) => {
-  console.log(req.params,"params")
+  console.log(req.params, "params")
   try {
-    await Images.find({Qrcode:req.params.id}).then(data => {
+    await Images.find({ Qrcode: req.params.id }).then(data => {
       console.log(data)
       res.send({ status: "ok", data: data })
-      
+
     })
 
   } catch (error) {
@@ -132,11 +142,11 @@ app.get("/get-image/find_by_qr/:id", async (req, res) => {
 })
 
 app.get("/get-image-count", async (req, res) => {
-  console.log(req.params,"params")
+  console.log(req.params, "params")
   try {
-   let count =  await Images.find().countDocuments()
+    let count = await Images.find().countDocuments()
     console.log(count)
-    return res.send({data:count})
+    return res.send({ data: count })
   } catch (error) {
     return res.status(400)
   }

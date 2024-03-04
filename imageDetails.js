@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const ImageDetailsScehma = new mongoose.Schema(
   {
-   image:String,
+   image:[String],
    name:String,
    select:String,
    password:String,
@@ -10,7 +10,8 @@ const ImageDetailsScehma = new mongoose.Schema(
    code:String,
    location:String,
    QrGet:String,
-   Qrcode:String
+   Qrcode:String,
+   userId:{type:mongoose.Schema.Types.ObjectId,ref:"UserInfo"}
   },
   {
     collection: "ImageDetails",
