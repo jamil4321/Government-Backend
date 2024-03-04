@@ -118,7 +118,7 @@ app.get("/get-image-by-User/:id", async (req, res) => {
 app.get("/get-image/:id", async (req, res) => {
   console.log(req.params, "params")
   try {
-    await Images.find({ fileid: req.params.id }).then(data => {
+    await Images.find({ fileid: req.params.id }).populate("userId").then(data => {
       res.send({ status: "ok", data: data })
     })
 
